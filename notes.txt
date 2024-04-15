@@ -1,0 +1,33 @@
+How the AWS and User input module would interact 
+The user input module and the AWS module interact in a Go CLI for uploading files through a series of steps. Here's how they could interact:
+
+1. User Input Module:
+The user input module is responsible for parsing command-line arguments and collecting input from the user.
+It may prompt the user for required information such as the file to upload, AWS credentials, S3 bucket name, CloudFront distribution ID, etc.
+Once the user provides the necessary input, the user input module prepares the data and passes it to the AWS module for further processing.
+
+2. AWS Module:
+The AWS module is responsible for interacting with AWS services such as S3 and CloudFront.
+Upon receiving input from the user input module, the AWS module performs the following steps:
+Steps for Uploading Files to AWS S3:
+Prepare AWS Configuration:
+
+Extract AWS credentials and other configuration settings provided by the user input module.
+
+Establish AWS Session:
+
+Create an AWS session using the extracted credentials and configuration settings.
+
+Upload File to S3:
+
+Use the AWS session to create an S3 client.
+
+Invoke the function responsible for uploading the file to the specified S3 bucket, passing the file data, S3 bucket name, and other necessary parameters.
+
+Steps for CloudFront Invalidation:
+
+Initiate CloudFront Invalidation:
+
+Use the AWS session to create a CloudFront client.
+
+Invoke the function responsible for initiating a CloudFront invalidation, passing the CloudFront distribution ID and the paths to invalidate.
