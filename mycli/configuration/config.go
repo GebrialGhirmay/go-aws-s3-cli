@@ -1,5 +1,3 @@
-package config
-
 // Config represents the configuration settings for the CLI
 
 //Configuration Management:
@@ -28,11 +26,13 @@ package config
 
 //Allows for easy configuration changes without modifying code.
 
+package config
+
 type Config struct {
-	AWSAccessKeyID     string
-	AWSSecretAccessKey string
-	S3BucketName       string
-	CloudFrontDistID   string
-	LogLevel           string
+	AWSAccessKeyID     string // AWS access key ID
+	AWSSecretAccessKey string // AWS secret access key
+	S3BucketName       string // Name of the S3 bucket to interact with
+	CloudFrontDistID   string // Name of the ID of the CloudFront distribution to invalidate
+	LogLevel           string // Logging level of the AWS SDK (eg. "debug", "info", "warn")
 	// Add other configuration fields as needed
 }

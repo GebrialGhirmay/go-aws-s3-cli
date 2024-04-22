@@ -1,4 +1,5 @@
 How the AWS and User input module would interact 
+
 The user input module and the AWS module interact in a Go CLI for uploading files through a series of steps. Here's how they could interact:
 
 1. User Input Module:
@@ -9,6 +10,7 @@ Once the user provides the necessary input, the user input module prepares the d
 2. AWS Module:
 The AWS module is responsible for interacting with AWS services such as S3 and CloudFront.
 Upon receiving input from the user input module, the AWS module performs the following steps:
+
 Steps for Uploading Files to AWS S3:
 Prepare AWS Configuration:
 
