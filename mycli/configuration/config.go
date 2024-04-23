@@ -50,7 +50,7 @@ func NewConfig() *Config {
 	return &Config{
 		AWSAccessKeyID:     accessKeyID,
 		AWSSecretAccessKey: secretAccessKey,
-		S3BucketName:       "your-bucket-name",
+		S3BucketName:       "s3://content.lumen-research.com/cachepages/release/AM1 Go CLI Project /",
 		CloudFrontDistID:   "your-cloudfront-distribution-id",
 		LogLevel:           "info",
 	}

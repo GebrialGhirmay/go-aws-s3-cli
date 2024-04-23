@@ -1,6 +1,6 @@
 //Implements functions for uploading files to AWS S3.
 
-package aws
+package awssession
 
 import (
     "github.com/aws/aws-sdk-go/aws"
