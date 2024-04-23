@@ -28,11 +28,30 @@
 
 package config
 
+//Once you've set these environment variables, you can load them into the Go application using the os package
+import (
+	"os"
+)
+
 type Config struct {
-	AWSAccessKeyID     string // AWS access key ID
-	AWSSecretAccessKey string // AWS secret access key
-	S3BucketName       string // Name of the S3 bucket to interact with
-	CloudFrontDistID   string // Name of the ID of the CloudFront distribution to invalidate
-	LogLevel           string // Logging level of the AWS SDK (eg. "debug", "info", "warn")
-	// Add other configuration fields as needed
+	AWSAccessKeyID     string
+	AWSSecretAccessKey string
+	S3BucketName       string
+	CloudFrontDistID   string
+	LogLevel           string
+}
+
+// the NewConfig function now uses os.LookupEnv to retrieve the values of the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables and assigns them to the respective fields in the Config struct.
+
+func NewConfig() *Config {
+	accessKeyID, _ := os.LookupEnv("AWS_ACCESS_KEY_ID")
+	secretAccessKey, _ := os.LookupEnv("AWS_SECRET_ACCESS_KEY")
+
+	return &Config{
+		AWSAccessKeyID:     accessKeyID,
+		AWSSecretAccessKey: secretAccessKey,
+		S3BucketName:       "your-bucket-name",
+		CloudFrontDistID:   "your-cloudfront-distribution-id",
+		LogLevel:           "info",
+	}
 }

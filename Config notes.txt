@@ -1,9 +1,27 @@
-The relevant information for the provided code snippet can be found in the AWS SDK for Go documentation on the AWS website.
+A session token may or may not be necessary in the config file for a Go AWS S3 CLI, depending on the authentication method you are using.
 
-Specifically, you can find information about the config package and the Config struct in the following locations:
+In the AWS SDK for Go, you can authenticate using several different methods, including:
 
-AWS SDK for Go Documentation: The main documentation for the AWS SDK for Go is available at https://docs.aws.amazon.com/sdk-for-go/index.html.
+Static Credentials: You provide your AWS access key ID and secret access key directly in the Config struct or through environment variables. In this case, a session token is not required.
 
-Config Package Documentation: The documentation for the config package, which includes the Config struct, can be found at https://pkg.go.dev/github.com/aws/aws-sdk-go/aws/config.
+AWS Credentials File: You store your AWS credentials (access key ID, secret access key, and optional session token) in an AWS credentials file (~/.aws/credentials on Unix-based systems or %UserProfile%\.aws\credentials on Windows). If you're using temporary credentials with a session token, you would need to include the session token in the credentials file.
 
-Config Struct Documentation: The documentation for the Config struct itself is available at https://pkg.go.dev/github.com/aws/aws-sdk-go/aws#Config.
+AWS Access Key ID:
+
+The Access Key ID is a unique identifier, similar to a username, that is used to identify you when you interact with AWS services. It is associated with an AWS account or an IAM user within an AWS account.
+
+AWS Secret Access Key:
+The Secret Access Key is a private key, similar to a password, that is used to sign programmatic requests made to AWS services. It is meant to be kept confidential and should never be shared or exposed publicly.
+
+Note that for security reasons, it's generally not recommended to hardcode your AWS credentials directly in your code. Instead, you should consider loading them from environment variables, a secure credentials file, or using other secure mechanisms provided by AWS, such as IAM roles.
+
+Environment variables are key-value pairs that store configuration data or settings for the current environment or system. They are external to the application and can be accessed and used by the application during runtime.
+
+In the context of loading AWS credentials, you can store your AWS Access Key ID and AWS Secret Access Key as environment variables on your local machine or the server where your application is running. This approach helps keep your credentials separate from your codebase, which is generally considered a more secure practice.
+
+setx AWS_ACCESS_KEY_ID "YOUR_ACCESS_KEY_ID"
+setx AWS_SECRET_ACCESS_KEY "YOUR_SECRET_ACCESS_KEY"
+
+Replace YOUR_ACCESS_KEY_ID and YOUR_SECRET_ACCESS_KEY with your actual AWS credentials.
+
+Once you've set these environment variables, you can load them into your Go application using the os package. 
