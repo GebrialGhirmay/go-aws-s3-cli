@@ -1,4 +1,4 @@
-//Implements functions for uploading files to AWS S3.
+//Implements functions for establishing a connection to AWS S3.
 
 package awssession
 

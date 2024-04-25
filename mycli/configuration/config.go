@@ -43,6 +43,8 @@ type Config struct {
 
 // the NewConfig function now uses os.LookupEnv to retrieve the values of the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables and assigns them to the respective fields in the Config struct.
 
+// the LogLevel is set to "info", which means that log messages with a severity level of info or higher (e.g., warn, error) will be logged, while messages with a lower level (e.g., debug) will be ignored.
+
 func NewConfig() *Config {
 	accessKeyID, _ := os.LookupEnv("AWS_ACCESS_KEY_ID")
 	secretAccessKey, _ := os.LookupEnv("AWS_SECRET_ACCESS_KEY")
@@ -51,7 +53,7 @@ func NewConfig() *Config {
 		AWSAccessKeyID:     accessKeyID,
 		AWSSecretAccessKey: secretAccessKey,
 		S3BucketName:       "s3://content.lumen-research.com/cachepages/release/AM1 Go CLI Project /",
-		CloudFrontDistID:   "your-cloudfront-distribution-id",
+		CloudFrontDistID:   "IELI6WX9MC9WSEFR9VFCDBVWZX",
 		LogLevel:           "info",
 	}
 }

@@ -1,0 +1,26 @@
+It's important to note that creating a broad invalidation without object paths can be costly, as CloudFront charges based on the number of invalidated objects. Additionally, it may take longer for the invalidation to complete, as CloudFront needs to remove all cached objects across its edge locations.
+Here's a general approach you can take:
+
+Create a CloudFront invalidation without specifying any object paths in your Go CLI. This will create a "catch-all" invalidation that will clear the entire cache for your CloudFront distribution.
+
+Upload your HTML files to the S3 bucket using the Go CLI.
+
+After the files have been uploaded, create a new CloudFront invalidation that specifies the paths of the uploaded HTML files. This targeted invalidation will remove only the cached objects corresponding to the uploaded files, ensuring that subsequent requests for those files will fetch the latest versions from the S3 bucket.
+
+CloudFront requires at least one valid object path to be specified when creating an invalidation. Leaving the object path input box empty is not allowed, as CloudFront needs to know which objects to invalidate from the cache.
+
+To create a "catch-all" invalidation that removes all cached objects from CloudFront's edge locations for the associated distribution, you need to specify a specific path pattern. The most common pattern used for this purpose is /*.
+
+The /* pattern is a wildcard that matches all objects in the distribution, regardless of their paths or file types. By providing /* as the object path, you're instructing CloudFront to invalidate all cached objects for the specified distribution.
+Here's how you can create a catch-all invalidation using the AWS Management Console:
+
+Open the AWS Management Console and navigate to the CloudFront service.
+Select your CloudFront distribution from the list.
+In the distribution details, click on the "Invalidations" tab.
+Click on the "Create Invalidation" button.
+In the "Object Paths" field, enter /* (without quotes).
+Review the estimated cost of the invalidation and click "Invalidate" to proceed.
+
+By specifying /* as the object path, you're creating an invalidation that will remove all cached objects from CloudFront's edge locations for the specified distribution.
+
+Keep in mind that creating a catch-all invalidation with /* can be costly, especially if your distribution serves a large number of objects or if you perform these invalidations frequently. 
