@@ -1,0 +1,49 @@
+config unit test notes:
+
+The config.go file is called in the config_unit_test.go file using the config package name, which is the same package name used in the config.go file.
+
+In the config_unit_test.go file, you have the following import statement:
+
+import (
+    "os"
+    "testing"
+)
+
+This imports the os and testing packages from the Go standard library.
+
+However, to access the NewConfig function (or any other function or type) defined in the config.go file, you need to import the config package itself.
+Since the config_unit_test.go file is  located in the same package as the config.go file you don't need to specify an import path for the config package. Instead, you can simply use the package name when referring to types or functions from that package.
+
+in the test cases it calls the NewConfig function like this:
+
+cfg := NewConfig()
+
+This line assumes that the NewConfig function is defined in the same package as the config_unit_test.go file, which is the config package.
+
+If you were to move the config_unit_test.go file to a different package directory, you would need to update the import statement to include the config package with a relative or absolute import path.
+
+Test case 3: 
+
+test case 3 tests the behaviour of os.LookupEnv when the environment variables are set to invalid values (empty strings, in this case).
+
+In the NewConfig function from the config.go file, I use os.LookupEnv to retrieve the values of the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables. 
+
+By setting the environment variables to empty strings and then calling NewConfig, it tests the behaviour of os.LookupEnv when it encounters these invalid values. The assertion checks that the AWSAccessKeyID and AWSSecretAccessKey fields in the returned Config struct are empty strings, as expected when the environment variables are set to empty strings.
+
+So, test case 3 specifically tests how os.LookupEnv handles empty string values for the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables, which is the same functionality used in the NewConfig function.
+
+By including this test case, it ensures that the NewConfig function behaves correctly when the AWS credential environment variables are set to invalid values (empty strings), and you're verifying the behavior of os.LookupEnv in that scenario.
+
+test case 1:
+
+In this test case, the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables are explicitly unset using os.Unsetenv. Then, the NewConfig function from the config.go file is called, and the returned Config struct is stored in the cfg variable.
+
+The test case then checks if the AWSAccessKeyID and AWSSecretAccessKey fields of the Config struct are empty strings. This tests the behavior of the NewConfig function when the environment variables for AWS credentials are not set. If the NewConfig function is working correctly, it should return empty strings for the AWSAccessKeyID and AWSSecretAccessKey fields when the environment variables are not set.
+
+test case 2:
+
+the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables are set to known test values ("test-access-key" and "test-secret-key", respectively) using os.Setenv. The defer statements ensure that these environment variables are unset after the test case is completed.
+Then, the NewConfig function is called again, and the test case checks if the AWSAccessKeyID and AWSSecretAccessKey fields of the Config struct are equal to the test values set in the environment variables.
+This test case verifies that the NewConfig function correctly reads the AWS credentials from the environment variables when they are set to valid values.
+
+test cases 1 and 2 are testing the behavior of the NewConfig function in the config.go file, specifically how it handles different scenarios related to reading the AWS credentials from environment variables.

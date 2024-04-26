@@ -30,6 +30,7 @@ package config
 
 //Once you've set these environment variables, you can load them into the Go application using the os package
 import (
+	"errors"
 	"os"
 )
 
@@ -45,15 +46,23 @@ type Config struct {
 
 // the LogLevel is set to "info", which means that log messages with a severity level of info or higher (e.g., warn, error) will be logged, while messages with a lower level (e.g., debug) will be ignored.
 
-func NewConfig() *Config {
-	accessKeyID, _ := os.LookupEnv("AWS_ACCESS_KEY_ID")
-	secretAccessKey, _ := os.LookupEnv("AWS_SECRET_ACCESS_KEY")
+func NewConfig() (*Config, error) {
+    accessKeyID, exists := os.LookupEnv("AWS_ACCESS_KEY_ID")
+    if !exists || accessKeyID == "" {
+        return nil, errors.New("no value provided for AWS_ACCESS_KEY_ID")
+    }
 
-	return &Config{
-		AWSAccessKeyID:     accessKeyID,
-		AWSSecretAccessKey: secretAccessKey,
-		S3BucketName:       "s3://content.lumen-research.com/cachepages/release/AM1 Go CLI Project /",
-		CloudFrontDistID:   "IELI6WX9MC9WSEFR9VFCDBVWZX",
-		LogLevel:           "info",
-	}
+    secretAccessKey, exists := os.LookupEnv("AWS_SECRET_ACCESS_KEY")
+    if !exists || secretAccessKey == "" {
+        return nil, errors.New("no value provided for AWS_SECRET_ACCESS_KEY")
+    }
+
+    return &Config{
+        AWSAccessKeyID:     accessKeyID,
+        AWSSecretAccessKey: secretAccessKey,
+        S3BucketName:       "s3://content.lumen-research.com/cachepages/release/AM1 Go CLI Project /",
+        CloudFrontDistID:   "IELI6WX9MC9WSEFR9VFCDBVWZX",
+        LogLevel:           "info",
+    }, nil
 }
+
