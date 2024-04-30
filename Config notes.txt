@@ -1,3 +1,5 @@
+IS A SESSION TOKEN NECESSARY FOR A CONFIG FILE?
+
 A session token may or may not be necessary in the config file for a Go AWS S3 CLI, depending on the authentication method you are using.
 
 In the AWS SDK for Go, you can authenticate using several different methods, including:
@@ -5,6 +7,8 @@ In the AWS SDK for Go, you can authenticate using several different methods, inc
 Static Credentials: You provide your AWS access key ID and secret access key directly in the Config struct or through environment variables. In this case, a session token is not required.
 
 AWS Credentials File: You store your AWS credentials (access key ID, secret access key, and optional session token) in an AWS credentials file (~/.aws/credentials on Unix-based systems or %UserProfile%\.aws\credentials on Windows). If you're using temporary credentials with a session token, you would need to include the session token in the credentials file.
+
+WHAT IS AN AWS ACCESS KEY ID AND SECRET ACCESS KEY?
 
 AWS Access Key ID:
 
@@ -19,9 +23,18 @@ Environment variables are key-value pairs that store configuration data or setti
 
 In the context of loading AWS credentials, you can store your AWS Access Key ID and AWS Secret Access Key as environment variables on your local machine or the server where your application is running. This approach helps keep your credentials separate from your codebase, which is generally considered a more secure practice.
 
-setx AWS_ACCESS_KEY_ID "YOUR_ACCESS_KEY_ID"
-setx AWS_SECRET_ACCESS_KEY "YOUR_SECRET_ACCESS_KEY"
-
-Replace YOUR_ACCESS_KEY_ID and YOUR_SECRET_ACCESS_KEY with your actual AWS credentials.
-
 Once you've set these environment variables, you can load them into your Go application using the os package. 
+
+HAVING SEPARATE CONFIG FILE AND CONFIG LOADER 
+
+Creating a separate config_loader.go file is not strictly necessary, but it can provide some benefits in terms of modularity and extensibility, especially for larger or more complex applications.
+
+Advantages of having a separate config_loader.go file:
+
+Separation of Concerns: By separating the configuration loading logic into a separate file, you are adhering to the principle of Separation of Concerns. This makes the code more modular and easier to maintain, as the configuration loading logic is decoupled from the rest of the application logic.
+
+Reusability: If you have multiple parts of your application that need to load configuration data, having a separate config_loader.go file allows you to reuse the configuration loading logic across different modules or packages.
+
+Extensibility: If you need to extend or modify the way configuration data is loaded (e.g., from a file, database, or other sources), you can do so by modifying the config_loader.go file without having to touch the rest of the application code that uses the configuration.
+
+Testability: Having a separate config_loader.go file can make it easier to write unit tests for the configuration loading logic, as you can isolate and test this functionality independently from the rest of the application.

@@ -30,7 +30,7 @@ func TestNewConfig(t *testing.T) {
 
     // Add assertions to check the values of cfg fields
     // Test S3 bucket name
-    expectedBucketName := "s3://content.lumen-research.com/cachepages/release/AM1 Go CLI Project /"
+    expectedBucketName := "am1gocli"
     if cfg.S3BucketName != expectedBucketName {
         t.Errorf("Incorrect S3BucketName: %s", cfg.S3BucketName)
     }
