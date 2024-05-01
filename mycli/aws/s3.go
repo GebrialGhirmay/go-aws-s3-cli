@@ -1,7 +1,7 @@
 package aws
 
 import (
-	"fmt"
+	//"fmt"
 	config "go-aws-s3-cli/mycli/configuration"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -19,8 +19,8 @@ func NewS3Client() (*s3.S3, error) {
 	}
 
 	// Prints AWS credentials (to validate that it is reading them correctly from the env. variables)
-	fmt.Println("AWS Access Key ID:", cfg.AWSAccessKeyID)
-	fmt.Println("AWS Secret Access Key:", cfg.AWSSecretAccessKey)
+	//fmt.Println("AWS Access Key ID:", cfg.AWSAccessKeyID)
+	//fmt.Println("AWS Secret Access Key:", cfg.AWSSecretAccessKey)
 
 	awsCredentials := credentials.NewStaticCredentials(cfg.AWSAccessKeyID, cfg.AWSSecretAccessKey, "")
 	//NewS3Client function then uses the loaded AWS credentials from the Config struct to create an AWS credentials object (awsCredentials) using the credentials.NewStaticCredentials function from the AWS SDK for Go
