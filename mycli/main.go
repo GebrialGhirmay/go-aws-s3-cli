@@ -2,30 +2,16 @@ package main
 
 import (
 	"fmt"
-	"go-aws-s3-cli/mycli/aws"
 
-	"github.com/aws/aws-sdk-go/service/s3"
+	"go-aws-s3-cli/mycli/fileupload"
 )
 
 func main() {
-	s3Client, err := aws.NewS3Client()
+	err := fileupload.UploadFile("C:/Users/Gebrial Ghirmay/Desktop/Cached pages/Azerion H&M 16 4 2024/3500.html")
 	if err != nil {
-		fmt.Println("Error creating S3 client:", err)
+		fmt.Println("Error uploading file:", err)
 		return
 	}
 
-	bucketName := "am1gocli"
-
-	result, err := s3Client.ListObjects(&s3.ListObjectsInput{
-		Bucket: &bucketName,
-	})
-	if err != nil {
-		fmt.Println("Error listing S3 objects:", err)
-		return
-	}
-
-	fmt.Printf("Objects in S3 bucket '%s':\n", bucketName)
-	for _, obj := range result.Contents {
-		fmt.Println("-", *obj.Key)
-	}
+	fmt.Println("File uploaded successfully")
 }
