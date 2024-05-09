@@ -26,7 +26,7 @@ func LoadConfig() (*Config, error) {
 		AWSAccessKeyID:     accessKeyID,
 		AWSSecretAccessKey: secretAccessKey,
 		S3BucketName:       "am1gocli",
-		CloudFrontDistID:   "IELI6WX9MC9WSEFR9VFCDBVWZX",
+		CloudFrontDistID:   "EWF9J0XNACRVF",
 		LogLevel:           "info",
 	}, nil
 }

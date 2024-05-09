@@ -36,7 +36,7 @@ func NewConfig() (*Config, error) {
 		AWSAccessKeyID:     accessKeyID,
 		AWSSecretAccessKey: secretAccessKey,
 		S3BucketName:       "am1gocli",
-		CloudFrontDistID:   "IELI6WX9MC9WSEFR9VFCDBVWZX",
+		CloudFrontDistID:   "EWF9J0XNACRVF",
 		LogLevel:           "info", // the LogLevel is set to "info", which means that log messages with a severity level of info or higher (e.g., warn, error) will be logged, while messages with a lower level (e.g., debug) will be ignored.
 	}, nil
 }
