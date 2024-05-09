@@ -36,7 +36,7 @@ func TestNewConfig(t *testing.T) {
     }
 
     // Test CloudFront distribution ID
-    expectedCloudFrontDistID := "IELI6WX9MC9WSEFR9VFCDBVWZX"
+    expectedCloudFrontDistID := "EWF9J0XNACRVF"
     if cfg.CloudFrontDistID != expectedCloudFrontDistID {
         t.Errorf("Incorrect CloudFrontDistID: %s", cfg.CloudFrontDistID)
     }
