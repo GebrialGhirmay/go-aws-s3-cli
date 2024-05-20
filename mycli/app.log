@@ -1,0 +1,10 @@
+AWS-S3-CLI: 2024/05/14 16:34:02 main.go:10: Starting AWS-S3-CLI application
+AWS-S3-CLI: 2024/05/14 16:34:03 main.go:16: AWS-S3-CLI application finished
+AWS-S3-CLI: 2024/05/14 16:34:59 main.go:10: Starting AWS-S3-CLI application
+AWS-S3-CLI: 2024/05/14 16:35:02 main.go:16: AWS-S3-CLI application finished
+AWS-S3-CLI: 2024/05/14 16:36:15 main.go:10: Starting AWS-S3-CLI application
+AWS-S3-CLI: 2024/05/14 16:36:19 main.go:16: AWS-S3-CLI application finished
+AWS-S3-CLI: 2024/05/14 16:41:17 main.go:10: Starting AWS-S3-CLI application
+AWS-S3-CLI: 2024/05/14 16:41:19 main.go:16: AWS-S3-CLI application finished
+2024/05/15 12:46:29 logging.go:68: INFO cli.go:30 File uploaded successfully
+2024/05/15 15:27:10 logging.go:68: WARNING cli.go:20 File path is required. Please provide a file path using the --file flag.

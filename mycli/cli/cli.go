@@ -1,10 +1,9 @@
 package cli
 
 import (
-    "fmt"
-    "os"
-
     "go-aws-s3-cli/mycli/fileupload"
+    "go-aws-s3-cli/mycli/logging" // Imports the logging package
+    "os"
 
     "github.com/spf13/cobra"
 )
@@ -18,17 +17,17 @@ var rootCmd = &cobra.Command{
     Short: "A command-line interface for interacting with AWS S3",
     Run: func(cmd *cobra.Command, args []string) {
         if filePath == "" {
-            fmt.Println("Error: File path is required. Please provide a file path using the --file flag.")
+            logging.Warning("File path is required. Please provide a file path using the --file flag.")
             return
         }
 
         err := fileupload.UploadFile(filePath)
         if err != nil {
-            fmt.Println("Error uploading file:", err)
+            logging.Error("Error uploading file: %v", err)
             return
         }
 
-        fmt.Println("File uploaded successfully")
+        logging.Info("File uploaded successfully")
     },
 }
 
@@ -38,7 +37,7 @@ func init() {
 
 func Execute() {
     if err := rootCmd.Execute(); err != nil {
-        fmt.Println(err)
+        logging.Error("Error executing CLI: %v", err)
         os.Exit(1)
     }
 }

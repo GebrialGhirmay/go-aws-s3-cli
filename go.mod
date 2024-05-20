@@ -12,7 +12,10 @@ go 1.21.5
 
 require github.com/aws/aws-sdk-go v1.51.25 // or the latest version
 
-require github.com/spf13/cobra v1.8.0
+require (
+	github.com/google/uuid v1.6.0
+	github.com/spf13/cobra v1.8.0
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
