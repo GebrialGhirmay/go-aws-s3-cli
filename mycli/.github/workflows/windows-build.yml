@@ -23,11 +23,11 @@ jobs:
         go build -o go-aws-s3-cli.exe main.go
 
     - name: Upload binary to release
-      uses: svenstaro/upload-release-action@v2
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: go-aws-s3-cli.exe
-        asset_name: go-aws-s3-cli-windows-${{ github.ref_name }}.exe
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "Built for Windows"
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./go-aws-s3-cli.exe
+          asset_name: go-aws-s3-cli-windows-${{ github.event.release.tag_name }}.exe
+          asset_content_type: application/octet-stream
