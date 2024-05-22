@@ -1,16 +1,15 @@
-name: Build for Windows
+name: Build and Release for Windows
 
 on:
-  push:
-    paths:
-      - 'main.go'
+  release:
+    types: [created]
 
 jobs:
 
   build:
     runs-on: windows-latest
+    
     steps:
-
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -28,7 +27,7 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: go-aws-s3-cli.exe
-        asset_name: go-aws-s3-cli-windows-${{ github.sha }}.exe
+        asset_name: go-aws-s3-cli-windows-${{ github.ref_name }}.exe
         tag: ${{ github.ref }}
         overwrite: true
-        body: "Built for Windows from commit ${{ github.sha }}"
+        body: "Built for Windows"
