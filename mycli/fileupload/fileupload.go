@@ -49,14 +49,18 @@ func UploadFile(filePath string) error {
 	// Extract the filename from the file path
 	_, filename := filepath.Split(filePath)
 
+	// Set the content type metadata for the uploaded object
+	contentType := "text/html"
+
 	// Upload the file to S3
 	result, err := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(cfg.S3BucketName),
-		Key:    aws.String(filename),
-		Body:   file,
+    Bucket:      aws.String(cfg.S3BucketName),
+    Key:         aws.String(filename),
+    Body:        file,
+    ContentType: &contentType, 
 	})
 	if err != nil {
-		return err
+    	return err
 	}
 
 	// Print the upload result
