@@ -4,15 +4,14 @@
 
 package fileupload
 
-
 import (
 	"fmt"
-	"go-aws-s3-cli/mycli/logging" // Import the logger package
+	"go-aws-s3-cli/logging" // Import the logger package
 	"os"
 	"path/filepath"
 
-	awsConfig "go-aws-s3-cli/mycli/configuration"
-	awsClient "go-aws-s3-cli/mycli/aws"
+	awsClient "go-aws-s3-cli/aws"
+	awsConfig "go-aws-s3-cli/configuration"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -54,20 +53,20 @@ func UploadFile(filePath string) error {
 
 	// Upload the file to S3
 	result, err := uploader.Upload(&s3manager.UploadInput{
-    Bucket:      aws.String(cfg.S3BucketName),
-    Key:         aws.String(filename),
-    Body:        file,
-    ContentType: &contentType, 
+		Bucket:      aws.String(cfg.S3BucketName),
+		Key:         aws.String(filename),
+		Body:        file,
+		ContentType: &contentType,
 	})
 	if err != nil {
-    	return err
+		return err
 	}
 
 	// Print the upload result
 	fmt.Println("Successfully uploaded file to S3:", result.Location)
 
 	// Invalidate the CloudFront cache for the uploaded object
-	
+
 	err = awsClient.InvalidateCloudFrontCache(filename)
 	if err != nil {
 		return err

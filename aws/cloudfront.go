@@ -2,12 +2,12 @@ package aws
 
 import (
 	"fmt"
+	config "go-aws-s3-cli/configuration"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/cloudfront"
 	"github.com/google/uuid" // Imports the UUID library (had to run go mod tidy command)
-	"go-aws-s3-cli/mycli/configuration"
 )
 
 //The InvalidateCloudFrontCache function takes an objectKey string as input, which represents the key (filename) of the object for which the CloudFront cache needs to be invalidated.

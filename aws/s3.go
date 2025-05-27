@@ -1,13 +1,13 @@
 package aws
 
 import (
-    "go-aws-s3-cli/mycli/logging" // Imports the logging package
-    config "go-aws-s3-cli/mycli/configuration"
+	config "go-aws-s3-cli/configuration"
+	"go-aws-s3-cli/logging" // Imports the logging package
 
-    "github.com/aws/aws-sdk-go/aws"
-    "github.com/aws/aws-sdk-go/aws/credentials"
-    "github.com/aws/aws-sdk-go/aws/session"
-    "github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 )
 
 // NewS3Client, calls the config.LoadConfig() function to retrieve the configuration values. The config package is imported as config "go-aws-s3-cli/mycli/configuration".
@@ -15,9 +15,9 @@ import (
 func NewS3Client() (*s3.S3, error) {
 	cfg, err := config.LoadConfig() //LoadConfig function (defined in config_loader.go) returns a pointer to a Config struct that contains the loaded AWS access key ID and AWS secret access key from the environment variables.
 	if err != nil {
-        logging.Error("Error loading configuration: %v", err)
-        return nil, err
-    }
+		logging.Error("Error loading configuration: %v", err)
+		return nil, err
+	}
 
 	awsCredentials := credentials.NewStaticCredentials(cfg.AWSAccessKeyID, cfg.AWSSecretAccessKey, "")
 	//NewS3Client function then uses the loaded AWS credentials from the Config struct to create an AWS credentials object (awsCredentials) using the credentials.NewStaticCredentials function from the AWS SDK for Go
