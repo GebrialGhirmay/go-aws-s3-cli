@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-// NewS3Client, calls the config.LoadConfig() function to retrieve the configuration values. The config package is imported as config "go-aws-s3-cli/mycli/configuration".
+// NewS3Client, calls the config.LoadConfig() function to retrieve the configuration values. The config package is imported as config "go-aws-s3-cli//configuration".
 
 func NewS3Client() (*s3.S3, error) {
 	cfg, err := config.LoadConfig() //LoadConfig function (defined in config_loader.go) returns a pointer to a Config struct that contains the loaded AWS access key ID and AWS secret access key from the environment variables.
