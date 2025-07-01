@@ -31,7 +31,7 @@ The application is structured with the following components:
 ### Build from Source
 
 ```bash
-git clone https://github.com/your-username/go-aws-s3-cli.git
+git clone https://github.com/GebrialGhirmay/go-aws-s3-cli.git
 cd go-aws-s3-cli
 go mod tidy
 go build -o go-aws-s3-cli main.go
@@ -39,7 +39,42 @@ go build -o go-aws-s3-cli main.go
 
 ### Download Pre-built Binaries
 
-Check the [Releases](https://github.com/your-username/go-aws-s3-cli/releases) page for pre-built binaries for your platform.
+Pre-built binaries are available for multiple platforms on the [Releases](https://github.com/GebrialGhirmay/go-aws-s3-cli/releases) page.
+
+#### Available Platforms:
+- **Linux**: `amd64` and `arm64` architectures
+- **Windows**: `amd64` architecture  
+- **macOS**: `amd64` (Intel) and `arm64` (Apple Silicon) architectures
+
+#### Download and Install:
+
+**Linux/macOS:**
+```bash
+# Download the appropriate binary for your platform
+# Example for Linux amd64:
+curl -L -o go-aws-s3-cli.tar.gz https://github.com/GebrialGhirmay/go-aws-s3-cli/releases/latest/download/go-aws-s3-cli-linux-amd64.tar.gz
+
+# Extract the binary
+tar -xzf go-aws-s3-cli.tar.gz
+
+# Make it executable
+chmod +x go-aws-s3-cli-linux-amd64
+
+# Move to a directory in your PATH (optional)
+sudo mv go-aws-s3-cli-linux-amd64 /usr/local/bin/go-aws-s3-cli
+```
+
+**Windows:**
+1. Go to the [Releases](https://github.com/GebrialGhirmay/go-aws-s3-cli/releases) page
+2. Download `go-aws-s3-cli-windows-amd64.exe.zip`
+3. Extract the ZIP file
+4. Run `go-aws-s3-cli-windows-amd64.exe` from Command Prompt or PowerShell
+
+**Using GitHub CLI:**
+```bash
+# Install GitHub CLI first, then:
+gh release download --repo GebrialGhirmay/go-aws-s3-cli --pattern "*linux-amd64*"
+```
 
 ## Configuration
 
@@ -214,18 +249,65 @@ GOOS=windows GOARCH=amd64 go build -o go-aws-s3-cli.exe main.go
 GOOS=darwin GOARCH=amd64 go build -o go-aws-s3-cli-macos main.go
 ```
 
-## CI/CD
+## Creating Releases
 
-The project includes GitHub Actions workflows for automated building and releasing:
+### For Maintainers
 
-- **Linux Build**: Triggers on changes to `main.go`
-- **Windows Build**: Triggers on release creation
-- **Automatic Releases**: Binaries are automatically attached to GitHub releases
+To create a new release and trigger the build workflow:
 
+1. **Create and push a version tag:**
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
 
-### v1.0.0
-- Initial release
-- Basic S3 file upload functionality
-- CloudFront cache invalidation
-- Environment variable and AWS credentials file support
-- Comprehensive logging system
+2. **Or create a release through GitHub UI:**
+   - Go to your repository on GitHub
+   - Click "Releases" → "Create a new release"
+   - Create a new tag (e.g., `v1.0.0`)
+   - Add release title and description
+   - Click "Publish release"
+
+3. **Manual trigger (if needed):**
+   - Go to "Actions" tab in your repository
+   - Select "Build and Release Multi-Platform"
+   - Click "Run workflow"
+
+The workflow will automatically:
+- Build binaries for all supported platforms
+- Create compressed archives (`.tar.gz` for Unix, `.zip` for Windows)
+- Upload them to the GitHub release
+- Generate release notes
+
+### For Users
+
+#### Finding Releases
+
+1. **GitHub Releases Page**: Navigate to `https://github.com/GebrialGhirmay/go-aws-s3-cli/releases`
+2. **Latest Release**: Use the "Latest" badge or go directly to `/releases/latest`
+3. **Specific Version**: Each release is tagged with a version number (e.g., v1.0.0)
+
+#### Downloading Executables
+
+**Method 1: Direct Download**
+- Visit the releases page
+- Find the latest release
+- Download the appropriate file for your platform:
+  - `go-aws-s3-cli-linux-amd64.tar.gz` - Linux 64-bit
+  - `go-aws-s3-cli-linux-arm64.tar.gz` - Linux ARM64
+  - `go-aws-s3-cli-windows-amd64.exe.zip` - Windows 64-bit
+  - `go-aws-s3-cli-darwin-amd64.tar.gz` - macOS Intel
+  - `go-aws-s3-cli-darwin-arm64.tar.gz` - macOS Apple Silicon
+
+**Method 2: Using curl/wget**
+```bash
+# Get the latest release for Linux amd64
+curl -L -o go-aws-s3-cli.tar.gz \
+  "https://github.com/GebrialGhirmay/go-aws-s3-cli/releases/latest/download/go-aws-s3-cli-linux-amd64.tar.gz"
+```
+
+**Method 3: Using GitHub CLI**
+```bash
+gh release download --repo GebrialGhirmay/go-aws-s3-cli
+```
+

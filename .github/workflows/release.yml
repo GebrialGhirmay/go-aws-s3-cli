@@ -1,34 +1,91 @@
-name: Build and Release
+name: Build and Release Multi-Platform
 
 on:
   push:
-    paths:
-      - 'main.go'
+    tags:
+      - 'v*'  # Triggers on version tags like v1.0.0, v1.2.3, etc.
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
-    steps:
+    strategy:
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+            suffix: linux-amd64
+          - goos: linux
+            goarch: arm64
+            suffix: linux-arm64
+          - goos: windows
+            goarch: amd64
+            suffix: windows-amd64.exe
+          - goos: darwin
+            goarch: amd64
+            suffix: darwin-amd64
+          - goos: darwin
+            goarch: arm64
+            suffix: darwin-arm64
 
+    steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Go
-      uses: actions/setup-go@v3
+      uses: actions/setup-go@v4
       with:
-        go-version: 1.20.x
+        go-version: '1.20'
 
-    - name: Build
+    - name: Get dependencies
+      run: go mod tidy
+
+    - name: Build binary
+      env:
+        GOOS: ${{ matrix.goos }}
+        GOARCH: ${{ matrix.goarch }}
       run: |
-        go build -o go-aws-s3-cli main.go
+        if [ "${{ matrix.goos }}" = "windows" ]; then
+          go build -ldflags="-s -w" -o go-aws-s3-cli-${{ matrix.suffix }} main.go
+        else
+          go build -ldflags="-s -w" -o go-aws-s3-cli-${{ matrix.suffix }} main.go
+        fi
 
-    - name: Upload binary to release
-      uses: svenstaro/upload-release-action@v2
+    - name: Create tarball for non-Windows
+      if: matrix.goos != 'windows'
+      run: |
+        tar -czf go-aws-s3-cli-${{ matrix.suffix }}.tar.gz go-aws-s3-cli-${{ matrix.suffix }}
+        rm go-aws-s3-cli-${{ matrix.suffix }}
+
+    - name: Create zip for Windows
+      if: matrix.goos == 'windows'
+      run: |
+        zip go-aws-s3-cli-${{ matrix.suffix }}.zip go-aws-s3-cli-${{ matrix.suffix }}
+        rm go-aws-s3-cli-${{ matrix.suffix }}
+
+    - name: Upload Release Asset (tarball)
+      if: matrix.goos != 'windows'
+      uses: softprops/action-gh-release@v1
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: go-aws-s3-cli
-        asset_name: go-aws-s3-cli-${{ github.sha }}
-        tag: ${{ github.ref }}
-        overwrite: true
-        body: "Built from commit ${{ github.sha }}"
+        files: go-aws-s3-cli-${{ matrix.suffix }}.tar.gz
+        tag_name: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Release Asset (zip)
+      if: matrix.goos == 'windows'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: go-aws-s3-cli-${{ matrix.suffix }}.zip
+        tag_name: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
